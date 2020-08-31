@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -14,7 +15,7 @@ use Faker\Generator;
  */
 class ArticlePageFakeProvider implements ArticlePageProviderInterface
 {
-    private const ARTICLES_COUNT =  1;
+    private const ARTICLES_COUNT = 1;
     private const CATEGORIES = [
         'World',
         'Sport',
