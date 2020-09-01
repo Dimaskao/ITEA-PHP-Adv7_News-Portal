@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-class ArticleController extends AbstractController
+final class ArticleController extends AbstractController
 {
     private ArticlePageProviderInterface $articleProvider;
 
@@ -24,7 +24,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/article", methods={"GET"}, name="article")
+     * @Route("/article", methods={"GET"}, name="app_article")
      */
     public function article(): Response
     {

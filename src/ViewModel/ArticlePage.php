@@ -9,23 +9,23 @@ namespace App\ViewModel;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-class ArticlePage
+final class ArticlePage
 {
     private string $categoryTitle;
     private string $title;
     private \DateTimeImmutable $publicationDate;
-    private string $Description;
+    private string $body;
 
     public function __construct(
         string $categoryTitle,
         string $title,
         \DateTimeImmutable $publicationDate,
-        string $Description
+        string $body
     ) {
         $this->categoryTitle = $categoryTitle;
         $this->title = $title;
         $this->publicationDate = $publicationDate;
-        $this->Description = $Description;
+        $this->body = $body;
     }
 
     public function getCategoryTitle(): string
@@ -43,8 +43,8 @@ class ArticlePage
         return $this->publicationDate;
     }
 
-    public function getShortDescription(): ?string
+    public function getBody(): ?string
     {
-        return $this->Description;
+        return $this->body;
     }
 }

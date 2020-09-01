@@ -6,5 +6,5 @@ namespace App\Service;
 
 interface ArticlePageProviderInterface
 {
-    public function getArticle();
+    public function getArticle(): object;
 }

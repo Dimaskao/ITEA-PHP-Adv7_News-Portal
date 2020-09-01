@@ -13,7 +13,7 @@ use Faker\Generator;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-class ArticlePageFakeProvider implements ArticlePageProviderInterface
+final class ArticlePageFakeProvider implements ArticlePageProviderInterface
 {
     private const ARTICLES_COUNT = 1;
     private const CATEGORIES = [
@@ -23,6 +23,8 @@ class ArticlePageFakeProvider implements ArticlePageProviderInterface
         'Science',
     ];
 
+    private object $article;
+
     private Generator $faker;
 
     public function __construct()
@@ -30,15 +32,13 @@ class ArticlePageFakeProvider implements ArticlePageProviderInterface
         $this->faker = Factory::create();
     }
 
-    public function getArticle()
+    public function getArticle(): object
     {
-        $article = [];
-
         for ($i = 0; $i < self::ARTICLES_COUNT; ++$i) {
-            $article[] = $this->createArticle($i + 1);
+            $this->article = $this->createArticle($i + 1);
         }
 
-        return $article;
+        return $this->article;
     }
 
     private function createArticle(int $id): ArticlePage
