@@ -15,7 +15,7 @@ use Faker\Generator;
  */
 final class ArticlePageFakeProvider implements ArticlePageProviderInterface
 {
-    private const ARTICLES_COUNT = 1;
+    private const ARTICLE_ID = 1;
     private const CATEGORIES = [
         'World',
         'Sport',
@@ -23,7 +23,6 @@ final class ArticlePageFakeProvider implements ArticlePageProviderInterface
         'Science',
     ];
 
-    private object $article;
 
     private Generator $faker;
 
@@ -32,13 +31,9 @@ final class ArticlePageFakeProvider implements ArticlePageProviderInterface
         $this->faker = Factory::create();
     }
 
-    public function getArticle(): object
+    public function getArticle(): ArticlePage
     {
-        for ($i = 0; $i < self::ARTICLES_COUNT; ++$i) {
-            $this->article = $this->createArticle($i + 1);
-        }
-
-        return $this->article;
+        return $this->createArticle(self::ARTICLE_ID);
     }
 
     private function createArticle(int $id): ArticlePage
