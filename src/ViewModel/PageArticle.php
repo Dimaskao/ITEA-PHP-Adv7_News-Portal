@@ -9,7 +9,7 @@ namespace App\ViewModel;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-final class ArticlePage
+final class PageArticle
 {
     private string $categoryTitle;
     private string $title;

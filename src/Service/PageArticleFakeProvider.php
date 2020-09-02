@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\ViewModel\ArticlePage;
+use App\ViewModel\PageArticle;
 use Faker\Factory;
 use Faker\Generator;
 
@@ -13,7 +13,7 @@ use Faker\Generator;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-final class ArticlePageFakeProvider implements ArticlePageProviderInterface
+final class PageArticleFakeProvider implements PageArticleProviderInterface
 {
     private const ARTICLE_ID = 1;
     private const CATEGORIES = [
@@ -31,12 +31,12 @@ final class ArticlePageFakeProvider implements ArticlePageProviderInterface
         $this->faker = Factory::create();
     }
 
-    public function getArticle(): ArticlePage
+    public function getArticle(): PageArticle
     {
         return $this->createArticle(self::ARTICLE_ID);
     }
 
-    private function createArticle(int $id): ArticlePage
+    private function createArticle(int $id): PageArticle
     {
         $title = $this->faker->words(
             $this->faker->numberBetween(1, 4),
@@ -44,7 +44,7 @@ final class ArticlePageFakeProvider implements ArticlePageProviderInterface
         );
         $title = \ucfirst($title);
 
-        return new ArticlePage(
+        return new PageArticle(
             $this->faker->randomElement(self::CATEGORIES),
             $title,
             \DateTimeImmutable::createFromMutable($this->faker->dateTimeThisYear),
