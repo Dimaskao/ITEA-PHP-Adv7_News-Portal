@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="#" class="category-link">{{ article.categoryTitle }}</a>
+    <a href="#" class="post-link">
+        <h1>{{ article.title }}</h1>
+    </a>
+    <time>{{ article.publicationDate | date('d-m-Y') }}</time>
+    <p>{{ article.body }}</p>
+{%  endblock %}
