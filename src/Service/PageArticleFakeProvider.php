@@ -31,7 +31,7 @@ final class PageArticleFakeProvider implements PageArticleProviderInterface
         $this->faker = Factory::create();
     }
 
-    public function getArticle(): PageArticle
+    public function getArticle(int $id): PageArticle
     {
         return $this->createArticle(self::ARTICLE_ID);
     }
@@ -45,6 +45,7 @@ final class PageArticleFakeProvider implements PageArticleProviderInterface
         $title = \ucfirst($title);
 
         return new PageArticle(
+            $id,
             $this->faker->randomElement(self::CATEGORIES),
             $title,
             \DateTimeImmutable::createFromMutable($this->faker->dateTimeThisYear),

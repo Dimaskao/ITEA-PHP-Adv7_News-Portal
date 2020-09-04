@@ -24,11 +24,11 @@ final class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/article", methods={"GET"}, name="app_article")
+     * @Route("/article/{id}", methods={"GET"}, name="app_article", requirements={"id"="\d+"})
      */
-    public function article(): Response
+    public function article(int $id): Response
     {
-        $article = $this->articleProvider->getArticle();
+        $article = $this->articleProvider->getArticle($id);
 
         return $this->render('article/article.html.twig', [
             'article' => $article,
