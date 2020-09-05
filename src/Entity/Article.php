@@ -120,4 +120,5 @@ class Article
         $this->publicationDate = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
+
 }
