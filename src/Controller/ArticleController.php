@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Exception\EntityNotFoundException;
 use App\Service\PageArticleProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,11 +25,15 @@ final class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/article/{id}", methods={"GET"}, name="app_article", requirements={"id"="\d+"})
+     * @Route("/article/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="app_article")
      */
     public function article(int $id): Response
     {
-        $article = $this->articleProvider->getArticle($id);
+        try {
+            $article = $this->articleProvider->getArticle($id);
+        } catch (EntityNotFoundException $e) {
+            throw $this->createNotFoundException($e->getMessage(), $e);
+        }
 
         return $this->render('article/article.html.twig', [
             'article' => $article,

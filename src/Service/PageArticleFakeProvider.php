@@ -23,7 +23,6 @@ final class PageArticleFakeProvider implements PageArticleProviderInterface
         'Science',
     ];
 
-
     private Generator $faker;
 
     public function __construct()

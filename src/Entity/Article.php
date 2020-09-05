@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Excaption\ArticleBodyCannotBeEmptyExcaption;
 use App\Repository\ArticleRepository;
+use App\ViewModel\HomePageArticle;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -60,6 +63,18 @@ class Article
         $this->updatedAt = new \DateTimeImmutable();
     }
 
+    public function getHomePageArticle(): HomePageArticle
+    {
+        return new HomePageArticle(
+            $this->id,
+            'set category title', //TODO: set category title
+            $this->title,
+            $this->publicationDate,
+            $this->image,
+            $this->shortDescription
+        );
+    }
+
     public function addImage(?string $image): self
     {
         $this->image = $image;
@@ -86,7 +101,7 @@ class Article
      */
     public function publish(): void
     {
-        if($this->body === null){
+        if (null === $this->body) {
             throw new ArticleBodyCannotBeEmptyExcaption();
         }
 
