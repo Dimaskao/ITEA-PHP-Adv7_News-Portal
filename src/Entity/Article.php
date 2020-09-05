@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Excaption\ArticleBodyCannotBeEmptyExcaption;
 use App\Repository\ArticleRepository;
 use App\ViewModel\HomePageArticle;
+use App\ViewModel\PageArticle;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -72,6 +73,17 @@ class Article
             $this->publicationDate,
             $this->image,
             $this->shortDescription
+        );
+    }
+
+    public function getArticleById(): PageArticle
+    {
+        return new PageArticle(
+            $this->id,
+            'set category title', //TODO: set category title
+            $this->title,
+            $this->publicationDate,
+            $this->body
         );
     }
 

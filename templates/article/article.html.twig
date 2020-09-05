@@ -6,5 +6,5 @@
         <h1>{{ article.title }}</h1>
     </a>
     <time>{{ article.publicationDate | date('d-m-Y') }}</time>
-    <p>{{ article.body }}</p>
+    <p>{{ article.body | raw }}</p>
 {%  endblock %}

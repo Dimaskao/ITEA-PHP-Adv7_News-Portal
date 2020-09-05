@@ -30,7 +30,7 @@ final class ArticleController extends AbstractController
     public function article(int $id): Response
     {
         try {
-            $article = $this->articleProvider->getArticle($id);
+            $article = $this->articleProvider->getArticleById($id);
         } catch (EntityNotFoundException $e) {
             throw $this->createNotFoundException($e->getMessage(), $e);
         }

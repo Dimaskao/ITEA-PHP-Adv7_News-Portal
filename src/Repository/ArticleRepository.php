@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Exception\EntityNotFoundException;
+use App\ViewModel\PageArticle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,7 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 final class ArticleRepository extends ServiceEntityRepository
 {
-    private const LATEST_PNBLISHED_ARTICLES_COUNT = 10;
+    private const LATEST_PUBLISHED_ARTICLES_COUNT = 10;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -28,13 +31,44 @@ final class ArticleRepository extends ServiceEntityRepository
      */
     public function getLatestPublished(): array
     {
-        $query = $this->createQueryBuilder('a')
-            ->where('a.publicationDate IS NOT NULL')
-            ->setMaxResults(self::LATEST_PNBLISHED_ARTICLES_COUNT)
+        $query = $this->addPublished()
+            ->setMaxResults(self::LATEST_PUBLISHED_ARTICLES_COUNT)
             ->orderBy('a.publicationDate', 'DESC')
             ->getQuery()
         ;
 
         return $query->getResult();
+    }
+
+    /**
+     * @throws EntityNotFoundException
+     */
+    public function  getArticleById(int $id): Article
+    {
+        $query = $this->addPublished()
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+        ;
+
+        $article = $query->getOneOrNullResult();
+
+        if (null === $article) {
+            throw new EntityNotFoundException('Article', $id);
+        }
+
+        return $article;
+    }
+
+    private function addPublished(?QueryBuilder $qb = null): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder($qb)
+            ->andWhere('a.publicationDate IS NOT NULL')
+            ;
+    }
+
+    private function getOrCreateQueryBuilder(?QueryBuilder $qb = null): QueryBuilder
+    {
+        return $qb ?? $this->createQueryBuilder('a');
     }
 }
