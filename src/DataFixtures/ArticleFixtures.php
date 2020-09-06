@@ -5,16 +5,21 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Article;
+use App\Entity\Category;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ArticleFixtures extends AbstractFixture
+class ArticleFixtures extends AbstractFixture implements DependentFixtureInterface
 {
     private const ARTICLES_COUNT = 15;
 
     public function load(ObjectManager $manager)
     {
+        $categories = $manager->getRepository(Category::class)->findAll();
+
         for ($i = 0; $i < self::ARTICLES_COUNT; ++$i) {
-            $article = $this->createArticle();
+            $category = $this->faker->randomElement($categories);
+            $article = $this->createArticle($category);
 
             if ($this->faker->boolean(80)) {
                 $article->publish();
@@ -26,15 +31,15 @@ class ArticleFixtures extends AbstractFixture
         $manager->flush();
     }
 
-    private function createArticle(): Article
+    private function createArticle(Category $category): Article
     {
         $article = new Article($this->generateTitle());
 
         return $article
             ->addImage($this->faker->imageUrl())
             ->addShortDescription($this->generateShortDescription())
-            ->addBody($this->generateBody())
-            ;
+            ->setCategory($category)
+            ->addBody($this->generateBody());
     }
 
     private function generateTitle(): string
@@ -45,6 +50,11 @@ class ArticleFixtures extends AbstractFixture
         );
 
         return \ucfirst($title);
+    }
+
+    private function generateCategory(): string
+    {
+        return $this->faker->randomElement(self::CATEGORIES);
     }
 
     private function generateShortDescription(): string
@@ -66,5 +76,12 @@ class ArticleFixtures extends AbstractFixture
         }
 
         return $body;
+    }
+
+    public function getDependencies()
+    {
+        return [
+            CategoryFixture::class
+        ];
     }
 }
