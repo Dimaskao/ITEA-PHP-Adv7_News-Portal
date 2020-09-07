@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Excaption\ArticleBodyCannotBeEmptyExcaption;
+use App\Exception\ArticleBodyCannotBeEmptyException;
 use App\Repository\ArticleRepository;
 use App\ViewModel\HomePageArticle;
 use App\ViewModel\PageArticle;
@@ -68,13 +68,15 @@ class Article
         $this->title = $title;
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+        $this->category->getId();
     }
 
     public function getHomePageArticle(): HomePageArticle
     {
         return new HomePageArticle(
             $this->id,
-            'set category title', //TODO: set category title
+            $this->category->getName(),
+            $this->category->getSlug(),
             $this->title,
             $this->publicationDate,
             $this->image,
@@ -86,11 +88,17 @@ class Article
     {
         return new PageArticle(
             $this->id,
-            'set category title', //TODO: set category title
+            $this->category->getName(),
+            $this->category->getSlug(),
             $this->title,
             $this->publicationDate,
             $this->body
         );
+    }
+
+    public function getArticleForCategoryPage()
+    {
+        return [$this->id, $this->title, $this->image, $this->shortDescription, $this->publicationDate];
     }
 
     public function addImage(?string $image): self
@@ -115,12 +123,12 @@ class Article
     }
 
     /**
-     * @throws ArticleBodyCannotBeEmptyExcaption
+     * @throws ArticleBodyCannotBeEmptyException
      */
     public function publish(): void
     {
         if (null === $this->body) {
-            throw new ArticleBodyCannotBeEmptyExcaption();
+            throw new ArticleBodyCannotBeEmptyException();
         }
 
         $this->publicationDate = new \DateTimeImmutable();
@@ -139,4 +147,28 @@ class Article
         return $this;
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getPublicationDate(): ?\DateTimeImmutable
+    {
+        return $this->publicationDate;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
 }

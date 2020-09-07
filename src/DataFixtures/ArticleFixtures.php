@@ -81,7 +81,7 @@ class ArticleFixtures extends AbstractFixture implements DependentFixtureInterfa
     public function getDependencies()
     {
         return [
-            CategoryFixture::class
+            CategoryFixture::class,
         ];
     }
 }

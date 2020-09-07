@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Category;
@@ -19,4 +21,8 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function getArticleBySlug(string $slug)
+    {
+        $qb = $this->createQueryBuilder('c');
+    }
 }

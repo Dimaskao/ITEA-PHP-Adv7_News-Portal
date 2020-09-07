@@ -11,20 +11,24 @@ namespace App\ViewModel;
  */
 final class PageArticle
 {
-    private int $id;
-    private string $categoryTitle;
-    private string $title;
-    private \DateTimeImmutable $publicationDate;
-    private string $body;
+    private ?int $id;
+    private ?string $categoryTitle;
+    private ?string $categorySlug;
+    private ?string $title;
+    private ?\DateTimeImmutable $publicationDate;
+    private ?string $body;
 
     public function __construct(
         int $id,
         string $categoryTitle,
+        string $categorySlug,
         string $title,
         \DateTimeImmutable $publicationDate,
         string $body
     ) {
+        $this->id = $id;
         $this->categoryTitle = $categoryTitle;
+        $this->categorySlug = $categorySlug;
         $this->title = $title;
         $this->publicationDate = $publicationDate;
         $this->body = $body;
@@ -53,5 +57,10 @@ final class PageArticle
     public function getBody(): string
     {
         return $this->body;
+    }
+
+    public function getCategorySlug(): string
+    {
+        return $this->categorySlug;
     }
 }

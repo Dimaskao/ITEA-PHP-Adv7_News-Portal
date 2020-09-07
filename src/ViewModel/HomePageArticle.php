@@ -8,6 +8,7 @@ final class HomePageArticle
 {
     private int $id;
     private string $categoryTitle;
+    private string $categorySlug;
     private string $title;
     private \DateTimeImmutable $publicationDate;
     private ?string $image;
@@ -16,6 +17,7 @@ final class HomePageArticle
     public function __construct(
         int $id,
         string $categoryTitle,
+        string $categorySlug,
         string $title,
         \DateTimeImmutable $publicationDate,
         ?string $image,
@@ -23,6 +25,7 @@ final class HomePageArticle
     ) {
         $this->id = $id;
         $this->categoryTitle = $categoryTitle;
+        $this->categorySlug = $categorySlug;
         $this->title = $title;
         $this->publicationDate = $publicationDate;
         $this->image = $image;
@@ -57,5 +60,10 @@ final class HomePageArticle
     public function getShortDescription(): ?string
     {
         return $this->shortDescription;
+    }
+
+    public function getCategorySlug(): string
+    {
+        return $this->categorySlug;
     }
 }
