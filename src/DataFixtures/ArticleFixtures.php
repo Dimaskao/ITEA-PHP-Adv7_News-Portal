@@ -52,11 +52,6 @@ class ArticleFixtures extends AbstractFixture implements DependentFixtureInterfa
         return \ucfirst($title);
     }
 
-    private function generateCategory(): string
-    {
-        return $this->faker->randomElement(self::CATEGORIES);
-    }
-
     private function generateShortDescription(): string
     {
         return $this->faker->words(

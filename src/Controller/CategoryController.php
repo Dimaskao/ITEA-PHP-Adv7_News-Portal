@@ -27,7 +27,7 @@ final class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/category/{slug}", methods={"GET"}, name="app_article_by_category")
+     * @Route("/category/{slug}", requirements={"slug"="\w+"}, methods={"GET"}, name="app_article_by_category")
      */
     public function showArticleByCategory(string $slug): Response
     {

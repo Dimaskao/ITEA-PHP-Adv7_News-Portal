@@ -20,7 +20,7 @@ class Category
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -66,10 +66,6 @@ class Category
     public function getArticles(): Collection
     {
         return $this->articles;
-    }
-
-    public function getCategoryPageArticle()
-    {
     }
 
     public function addArticle(Article $article): self
