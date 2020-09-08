@@ -94,7 +94,7 @@ class Article
             $this->body
         );
     }
-    
+
     public function addImage(?string $image): self
     {
         $this->image = $image;

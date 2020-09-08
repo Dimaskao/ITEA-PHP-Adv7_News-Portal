@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Service;
-
 
 use App\Repository\CategoryRepository;
 use App\ViewModel\CategoryPageArticle;
 
 /**
- * Returns only published articles
+ * Returns only published articles.
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */

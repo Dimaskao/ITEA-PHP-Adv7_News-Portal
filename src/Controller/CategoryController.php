@@ -25,6 +25,7 @@ final class CategoryController extends AbstractController
     {
         $this->categoryProvider = $categoryProvider;
     }
+
     /**
      * @Route("/category/{slug}", methods={"GET"}, name="app_article_by_category")
      */

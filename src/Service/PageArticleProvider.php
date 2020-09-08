@@ -8,7 +8,7 @@ use App\Repository\ArticleRepository;
 use App\ViewModel\PageArticle;
 
 /**
- * Returns article by id
+ * Returns article by id.
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */

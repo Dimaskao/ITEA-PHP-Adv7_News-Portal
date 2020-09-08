@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\ViewModel;
 
@@ -8,7 +9,7 @@ namespace App\ViewModel;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-class CategoryPageArticle
+final class CategoryPageArticle
 {
     private array $articles;
 
@@ -21,5 +22,4 @@ class CategoryPageArticle
     {
         return $this->articles;
     }
-
 }
