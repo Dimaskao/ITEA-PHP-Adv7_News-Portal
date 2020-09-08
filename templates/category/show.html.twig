@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    {% for article in articles %}
+    {% set publishedArticles = articles.articles %}
+    {% for article in publishedArticles %}
         <div class="col-3">
             <article class="post top-post">
                 <a href="{{ path('app_article', { id: article.id }) }}">

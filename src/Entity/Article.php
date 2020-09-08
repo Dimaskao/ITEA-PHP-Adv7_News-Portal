@@ -68,7 +68,6 @@ class Article
         $this->title = $title;
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
-        $this->category->getId();
     }
 
     public function getHomePageArticle(): HomePageArticle
@@ -95,12 +94,7 @@ class Article
             $this->body
         );
     }
-
-    public function getArticleForCategoryPage()
-    {
-        return [$this->id, $this->title, $this->image, $this->shortDescription, $this->publicationDate];
-    }
-
+    
     public function addImage(?string $image): self
     {
         $this->image = $image;
@@ -140,7 +134,7 @@ class Article
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    public function addCategory(?Category $category): self
     {
         $this->category = $category;
 

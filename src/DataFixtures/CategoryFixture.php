@@ -7,7 +7,7 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
 
-class CategoryFixture extends AbstractFixture
+final class CategoryFixture extends AbstractFixture
 {
     private const CATEGORIES = [
         'World',

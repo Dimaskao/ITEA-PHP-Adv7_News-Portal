@@ -38,7 +38,7 @@ class ArticleFixtures extends AbstractFixture implements DependentFixtureInterfa
         return $article
             ->addImage($this->faker->imageUrl())
             ->addShortDescription($this->generateShortDescription())
-            ->setCategory($category)
+            ->addCategory($category)
             ->addBody($this->generateBody());
     }
 
