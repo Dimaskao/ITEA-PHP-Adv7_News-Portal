@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\ViewModel;
+namespace App\Collection;
 
 /**
  * This class storage information about articles for Category Page.
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-final class CategoryPageArticle
+final class CategoryPageArticles
 {
     private array $articles;
 

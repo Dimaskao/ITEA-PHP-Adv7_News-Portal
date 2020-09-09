@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\ViewModel\CategoryPageArticle;
+use App\Collection\CategoryPageArticles;
 
 interface CategoryPageProviderInterface
 {
-    public function getArticleByCategory(string $slug): CategoryPageArticle;
+    public function getArticleByCategory(string $slug): CategoryPageArticles;
 }

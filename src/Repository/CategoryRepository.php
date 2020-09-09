@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Collection\CategoryPageArticles;
 use App\Entity\Article;
 use App\Entity\Category;
-use App\ViewModel\CategoryPageArticle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -27,7 +27,7 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    public function getArticleBySlug(string $slug): CategoryPageArticle
+    public function getArticleBySlug(string $slug): CategoryPageArticles
     {
         $em = $this->getEntityManager();
 
@@ -38,6 +38,6 @@ class CategoryRepository extends ServiceEntityRepository
             ->getRepository(Article::class)
             ->findBy(['category' => $category[0]->getId()]);
 
-        return new CategoryPageArticle($articles);
+        return new CategoryPageArticles($articles);
     }
 }
