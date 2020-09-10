@@ -5,19 +5,23 @@
 {% endblock %}
 
 {% block body %}
-    {% set publishedArticles = articles.articles %}
-    {% for article in publishedArticles %}
-        <div class="col-3">
-            <article class="post top-post">
-                <a href="{{ path('app_article', { id: article.id }) }}">
-                    <img src="{{ asset(article.image) }}" alt="" class="img-fluid">
-                </a>
-                <a href="{{ path('app_article', { id: article.id }) }}" class="post-link">
-                    <h3>{{ article.title }}</h3>
-                </a>
-                <time>{{ article.publicationDate | date('d-m-Y') }}</time>
-                <p>{{ article.shortDescription }}</p>
-            </article>
-        </div>
-    {% endfor %}
+    {% if undefinedCategory is defined %}
+        <h3>{{ undefinedCategory }}</h3>
+    {% else %}
+        {% set publishedArticles = articles.articles %}
+        {% for article in publishedArticles %}
+            <div class="col-3">
+                <article class="post top-post">
+                    <a href="{{ path('app_article', { id: article.id }) }}">
+                        <img src="{{ asset(article.image) }}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{{ path('app_article', { id: article.id }) }}" class="post-link">
+                        <h3>{{ article.title }}</h3>
+                    </a>
+                    <time>{{ article.publicationDate | date('d-m-Y') }}</time>
+                    <p>{{ article.shortDescription }}</p>
+                </article>
+            </div>
+        {% endfor %}
+    {% endif %}
 {%  endblock %}

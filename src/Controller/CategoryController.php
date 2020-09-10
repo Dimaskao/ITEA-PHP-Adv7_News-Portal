@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Article;
-use App\Entity\Category;
-use App\Exception\NotFoundArticlesForCategoryException;
+use App\Exception\UndefinedCategoryException;
 use App\Service\CategoryPageProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,9 +29,16 @@ final class CategoryController extends AbstractController
      */
     public function showArticleByCategory(string $slug): Response
     {
-        $publishedArticles = $this->categoryProvider->getArticleByCategory($slug);
+        try {
+            $publishedArticles = $this->categoryProvider->getArticleByCategory($slug);
+        } catch (UndefinedCategoryException $e) {
+            throw $this->createNotFoundException($e->getMessage(), $e);
+        }
+
         if (empty($publishedArticles->getArticles())) {
-            throw new NotFoundArticlesForCategoryException($slug);
+            return $this->render('category/show.html.twig', [
+                'undefinedCategory' => \sprintf('Articles for category "%s" not found.', $slug),
+            ]);
         }
 
         return $this->render('category/show.html.twig', [

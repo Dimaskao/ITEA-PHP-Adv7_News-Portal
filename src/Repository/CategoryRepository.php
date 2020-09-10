@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Collection\CategoryPageArticles;
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Exception\UndefinedCategoryException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,10 +31,15 @@ class CategoryRepository extends ServiceEntityRepository
     public function getArticleBySlug(string $slug): CategoryPageArticles
     {
         $em = $this->getEntityManager();
-
+        
         $category = $em
             ->getRepository(Category::class)
             ->findBy(['slug' => $slug]);
+
+        if ($category == null) {
+            throw new UndefinedCategoryException($slug);
+        }
+
         $articles = $em
             ->getRepository(Article::class)
             ->findBy(['category' => $category[0]->getId()]);

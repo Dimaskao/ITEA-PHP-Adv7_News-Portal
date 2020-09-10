@@ -18,11 +18,12 @@ final class CategoryFixture extends AbstractFixture
 
     public function load(ObjectManager $manager)
     {
-        foreach (self::CATEGORIES as $category) {
-            $cat = new Category();
-            $cat->setName($category);
+        foreach (self::CATEGORIES as $key => $category) {
+            $cat = new Category($category);
+            $this->addReference('category_'.$key, $cat);
             $manager->persist($cat);
         }
+        //$this->addReference('categoryReference', new Category());
         $manager->flush();
     }
 }

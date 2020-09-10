@@ -63,9 +63,10 @@ class Article
      */
     private $category;
 
-    public function __construct(string $title)
+    public function __construct(string $title, Category $category)
     {
         $this->title = $title;
+        $this->category = $category;
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
@@ -132,13 +133,6 @@ class Article
     public function getCategory(): string
     {
         return $this->category;
-    }
-
-    public function addCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
     }
 
     public function getId(): int

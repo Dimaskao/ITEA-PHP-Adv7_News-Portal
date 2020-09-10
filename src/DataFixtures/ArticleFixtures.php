@@ -15,10 +15,8 @@ class ArticleFixtures extends AbstractFixture implements DependentFixtureInterfa
 
     public function load(ObjectManager $manager)
     {
-        $categories = $manager->getRepository(Category::class)->findAll();
-
         for ($i = 0; $i < self::ARTICLES_COUNT; ++$i) {
-            $category = $this->faker->randomElement($categories);
+            $category = $this->getRandomCategory();
             $article = $this->createArticle($category);
 
             if ($this->faker->boolean(80)) {
@@ -31,14 +29,19 @@ class ArticleFixtures extends AbstractFixture implements DependentFixtureInterfa
         $manager->flush();
     }
 
+    private function getRandomCategory(): Category
+    {
+        $key = rand(0, 3);
+        return $this->getReference('category_' . $key);
+    }
+
     private function createArticle(Category $category): Article
     {
-        $article = new Article($this->generateTitle());
+        $article = new Article($this->generateTitle(), $category);
 
         return $article
             ->addImage($this->faker->imageUrl())
             ->addShortDescription($this->generateShortDescription())
-            ->addCategory($category)
             ->addBody($this->generateBody());
     }
 

@@ -38,9 +38,10 @@ class Category
      */
     private string $slug;
 
-    public function __construct()
+    public function __construct(string $name)
     {
         $this->articles = new ArrayCollection();
+        $this->name = $name;
     }
 
     public function getId(): ?int
@@ -53,42 +54,12 @@ class Category
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Article[]
      */
     public function getArticles(): Collection
     {
         return $this->articles;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
-            // set the owning side to null (unless already changed)
-            if ($article->getCategory() === $this) {
-                $article->setCategory(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getSlug()
