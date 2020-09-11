@@ -25,19 +25,6 @@ class CategoryPageProvider implements CategoryPageProviderInterface
     {
         $articles = $this->categoryRepository->getArticleBySlug($slug);
 
-        return new CategoryPageArticles($this->returnOnlyPublishedArticles($articles));
-    }
-
-    public function returnOnlyPublishedArticles($articles)
-    {
-        $publishedArticles = [];
-
-        foreach ($articles->getArticles() as $a) {
-            if (null !== $a->getPublicationDate()) {
-                $publishedArticles[] = $a;
-            }
-        }
-
-        return $publishedArticles;
+        return new CategoryPageArticles($articles);
     }
 }

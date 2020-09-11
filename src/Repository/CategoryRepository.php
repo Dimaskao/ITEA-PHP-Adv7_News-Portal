@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Collection\CategoryPageArticles;
-use App\Entity\Article;
 use App\Entity\Category;
 use App\Exception\UndefinedCategoryException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -28,22 +26,22 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    public function getArticleBySlug(string $slug): CategoryPageArticles
+    public function getArticleBySlug(string $slug): array
     {
-        $em = $this->getEntityManager();
-        
-        $category = $em
-            ->getRepository(Category::class)
-            ->findBy(['slug' => $slug]);
+        $qb = $this->createQueryBuilder('c');
 
-        if ($category == null) {
-            throw new UndefinedCategoryException($slug);
+        $query = $qb
+                ->select('a.id', 'a.title', 'a.image', 'a.publicationDate', 'a.shortDescription')
+                ->leftJoin('c.articles', 'a')
+                ->where('c.slug = :slug AND a.publicationDate IS NOT NULL')
+                ->setParameter('slug', $slug)
+                ->getQuery();
+        $result = $query->getResult();
+
+        if (empty($result)) {
+            throw new UndefinedCategoryException($slug);//TODO write normal
         }
 
-        $articles = $em
-            ->getRepository(Article::class)
-            ->findBy(['category' => $category[0]->getId()]);
-
-        return new CategoryPageArticles($articles);
+        return $result;
     }
 }

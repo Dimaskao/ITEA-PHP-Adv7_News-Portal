@@ -130,7 +130,7 @@ class Article
         $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function getCategory(): string
+    public function getCategory(): Category
     {
         return $this->category;
     }
