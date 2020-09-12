@@ -22,4 +22,9 @@ final class CategoryPageArticles
     {
         return $this->articles;
     }
+
+    public function getIterator(): iterable
+    {
+        return new \ArrayIterator($this->articles);
+    }
 }
