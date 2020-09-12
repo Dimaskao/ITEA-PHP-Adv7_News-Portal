@@ -37,7 +37,7 @@ final class CategoryController extends AbstractController
 
         if (empty($publishedArticles->getArticles())) {
             return $this->render('category/show.html.twig', [
-                'undefinedCategory' => \sprintf('Articles for category "%s" not found.', $slug),
+                'emptyCategory' => \sprintf('Articles for category "%s" not found.', $slug),
             ]);
         }
 

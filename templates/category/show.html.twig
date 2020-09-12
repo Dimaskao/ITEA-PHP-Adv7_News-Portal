@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    {% if undefinedCategory is defined %}
-        <h3>{{ undefinedCategory }}</h3>
+    {% if emptyCategory is defined %}
+        <h3>{{ emptyCategory }}</h3>
     {% else %}
         {% set publishedArticles = articles.articles %}
         {% for article in publishedArticles %}

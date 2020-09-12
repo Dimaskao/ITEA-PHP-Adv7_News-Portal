@@ -32,7 +32,8 @@ class ArticleFixtures extends AbstractFixture implements DependentFixtureInterfa
     private function getRandomCategory(): Category
     {
         $key = rand(0, 3);
-        return $this->getReference('category_' . $key);
+
+        return $this->getReference('category_'.$key);
     }
 
     private function createArticle(Category $category): Article

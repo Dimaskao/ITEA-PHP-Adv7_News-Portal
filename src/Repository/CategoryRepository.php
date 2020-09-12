@@ -28,20 +28,31 @@ class CategoryRepository extends ServiceEntityRepository
 
     public function getArticleBySlug(string $slug): array
     {
-        $qb = $this->createQueryBuilder('c');
+        $isCategoryExist = $this->createQueryBuilder('c')
+            ->where('c.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ;
 
-        $query = $qb
-                ->select('a.id', 'a.title', 'a.image', 'a.publicationDate', 'a.shortDescription')
-                ->leftJoin('c.articles', 'a')
-                ->where('c.slug = :slug AND a.publicationDate IS NOT NULL')
-                ->setParameter('slug', $slug)
-                ->getQuery();
-        $result = $query->getResult();
-
-        if (empty($result)) {
-            throw new UndefinedCategoryException($slug);//TODO write normal
+        if (null === $isCategoryExist->getOneOrNullResult()) {
+            throw new UndefinedCategoryException($slug);
         }
 
-        return $result;
+        $query = $this->createQueryBuilder('c')
+            ->addSelect('a')
+            ->leftJoin('c.articles', 'a')
+            ->where('c.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->andWhere('a.publicationDate IS NOT NULL')
+            ->getQuery()
+        ;
+
+        $category = $query->getOneOrNullResult();
+
+        if (null === $category) {
+            return [];
+        }
+
+        return $category->getArticles()->toArray(0);
     }
 }
