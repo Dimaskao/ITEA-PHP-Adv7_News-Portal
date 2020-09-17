@@ -23,7 +23,7 @@ final class CategoryFixture extends AbstractFixture
             $this->addReference('category_'.$key, $cat);
             $manager->persist($cat);
         }
-        //$this->addReference('categoryReference', new Category());
+
         $manager->flush();
     }
 }
