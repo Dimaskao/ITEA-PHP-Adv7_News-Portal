@@ -6,7 +6,6 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use App\Exception\EntityNotFoundException;
-use App\ViewModel\PageArticle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,7 +42,7 @@ final class ArticleRepository extends ServiceEntityRepository
     /**
      * @throws EntityNotFoundException
      */
-    public function  getArticleById(int $id): Article
+    public function getArticleById(int $id): Article
     {
         $query = $this->addPublished()
             ->andWhere('a.id = :id')

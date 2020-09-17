@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Article;
+use App\Entity\Category;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ArticleFixtures extends AbstractFixture
+class ArticleFixtures extends AbstractFixture implements DependentFixtureInterface
 {
     private const ARTICLES_COUNT = 15;
 
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < self::ARTICLES_COUNT; ++$i) {
-            $article = $this->createArticle();
+            $category = $this->getRandomCategory();
+            $article = $this->createArticle($category);
 
             if ($this->faker->boolean(80)) {
                 $article->publish();
@@ -26,15 +29,21 @@ class ArticleFixtures extends AbstractFixture
         $manager->flush();
     }
 
-    private function createArticle(): Article
+    private function getRandomCategory(): Category
     {
-        $article = new Article($this->generateTitle());
+        $key = rand(0, 3);
+
+        return $this->getReference('category_'.$key);
+    }
+
+    private function createArticle(Category $category): Article
+    {
+        $article = new Article($this->generateTitle(), $category);
 
         return $article
             ->addImage($this->faker->imageUrl())
             ->addShortDescription($this->generateShortDescription())
-            ->addBody($this->generateBody())
-            ;
+            ->addBody($this->generateBody());
     }
 
     private function generateTitle(): string
@@ -66,5 +75,12 @@ class ArticleFixtures extends AbstractFixture
         }
 
         return $body;
+    }
+
+    public function getDependencies()
+    {
+        return [
+            CategoryFixture::class,
+        ];
     }
 }

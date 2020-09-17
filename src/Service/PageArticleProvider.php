@@ -1,11 +1,17 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Service;
 
 use App\Repository\ArticleRepository;
 use App\ViewModel\PageArticle;
 
+/**
+ * Returns article by id.
+ *
+ * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
+ */
 class PageArticleProvider implements PageArticleProviderInterface
 {
     private ArticleRepository $articleRepository;
