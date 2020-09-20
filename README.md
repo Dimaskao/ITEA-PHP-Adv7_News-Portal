@@ -1,5 +1,7 @@
 # News Portal
 
+[![Build Status](https://travis-ci.org/ITEA-PHP-Advanced/ITEA-PHP-Adv7_News-Portal.svg?branch=dev)](https://travis-ci.org/ITEA-PHP-Advanced/ITEA-PHP-Adv7_News-Portal)
+
 ## Installation
 
 1. Clone repository
@@ -7,30 +9,63 @@
     ```sh
     $ git clone git@github.com:ITEA-PHP-Advanced/ITEA-PHP-Adv7_News-Portal.git
     ```
+   
 2. Install dependencies
 
     ```sh
-    $ composer install
+    $ docker-compose exec php-fpm composer install
     ```
-   
-3. Run local web-server using [Symfony CLI](https://symfony.com/download)
+
+3. Configure database connection
 
     ```sh
-    $ symfony serve
+    $ mv .env .env.local
     ```
+   
+4. Create and run docker containers
 
+    ```sh
+    $ docker-compose up -d --build
+    ```
+   
+5. Create a database and run migrations
+
+    ```sh
+    $ docker-compose exec php-fpm bash
+    $ ./bin/console doctrine:database:create
+    $ ./bin/console doctrine:migrations:migrate
+    ```    
+
+## API
+
+You can import [postman_collection.json](postman_collection.json) file to Postman to you prepared requests to back-office API.
+
+## Using composer
+Install composer dependencies
+```sh
+$ docker-compose exec php-fpm composer require <dependence>
+```  
 ## Code style fixer
 
 To check the code style just run the following command
 
 
 ```bash
-$ composer cs-check
+$ docker-compose exec php-fpm composer cs-check
 ```
 
 
 to fix the code style run next command
 
 ```bash
-$ composer cs-fix
+$ docker-compose exec php-fpm composer cs-fix
+```
+
+Tests
+-----
+
+To run unit tests just run the following command
+
+```bash
+$ docker-compose exec php-fpm ./bin/phpunit
 ```
