@@ -13,7 +13,7 @@
 2. Install dependencies
 
     ```sh
-    $ composer install
+    $ docker-compose exec php-fpm composer install
     ```
 
 3. Configure database connection
@@ -34,17 +34,17 @@
     $ docker-compose exec php-fpm bash
     $ ./bin/console doctrine:database:create
     $ ./bin/console doctrine:migrations:migrate
-    ```   
-6. Install composer dependencies
-
-    ```sh
-    $ docker-compose exec php-fpm composer require <dependence>
-    ```   
+    ```    
 
 ## API
 
 You can import [postman_collection.json](postman_collection.json) file to Postman to you prepared requests to back-office API.
 
+## Using composer
+Install composer dependencies
+```sh
+$ docker-compose exec php-fpm composer require <dependence>
+```  
 ## Code style fixer
 
 To check the code style just run the following command
